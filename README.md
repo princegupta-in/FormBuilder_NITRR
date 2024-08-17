@@ -47,8 +47,6 @@ Copy code
 --npm install -D tailwindcss postcss autoprefixer
 --npx tailwindcss init -p
 
-###Click Up link
-https://app.clickup.com/9016447460/v/l/8cpr4f4-396
 
 
 ##Install Material-UI (MUI) in your Next.js project:
@@ -56,3 +54,6 @@ https://app.clickup.com/9016447460/v/l/8cpr4f4-396
 bash
 Copy code
 --npm install @mui/material @emotion/react @emotion/styled
+
+### Click Up link
+https://app.clickup.com/9016447460/v/l/8cpr4f4-396
