@@ -1,3 +1,5 @@
+import "../../app/globals.css"
+
 export default function SignIn() {
     return (
       <div className="flex h-screen">
