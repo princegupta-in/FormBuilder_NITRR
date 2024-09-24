@@ -1,4 +1,4 @@
-const  asyncHandler  = require("../utils/asyncHandler");
+const asyncHandler  = require("../utils/asyncHandler");
 const ApiError = require("../utils/ApiError");
 const ApiResponse = require("../utils/ApiResponse");
 const bcrypt = require("bcryptjs");
@@ -51,4 +51,22 @@ exports.Signupuser = asyncHandler(async(req,res)=>{
 })
 
 
+exports.SigninUser = asyncHandler(async (req, res) => {
+	const { Email, Password } = req.body;
 
+	if (!Email || !Password) {
+		throw new ApiError(400, "Please provide both email and password");
+	}
+
+	const user = await User.findOne({ Email });
+	if (!user) {
+		throw new ApiError(401, "Invalid email or password");
+	}
+
+	const isPasswordValid = await bcrypt.compare(Password, user.Password);
+	if (!isPasswordValid) {
+		throw new ApiError(401, "Invalid email or password");
+	}
+
+	res.status(200).json(new ApiResponse(200, "Sign in successful", { userId: user._id }));
+});
