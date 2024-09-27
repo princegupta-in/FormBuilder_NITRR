@@ -9,7 +9,9 @@ import { Button } from "@/components/ui/button"
 
 const FormBuilder = () => {
   const [formName, setFormName] = useState('');
+  const [formDes, setFormDes] = useState('');
   const [questions, setQuestions] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
 
   const variants = {
     hidden: { opacity: 0, y: -50 },
@@ -17,8 +19,11 @@ const FormBuilder = () => {
     exit: { opacity: 0, x: -50 },
   };
 
+  const backgroundStyle = darkMode
+        ? 'bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900'
+        : 'bg-gradient-to-br from-blue-100 via-blue-300 to-blue-100';
 
-  const generateId = () => Math.random().toString(36).substr(2, 9);
+  const generateId = () => Math.random().toString(36).slice(2, 9);
 
   const handleAddQuestion = () => {
     setQuestions([...questions, { id: generateId(), questionName: '', questionType: 'single', options: [''], required: false }]);
@@ -26,7 +31,10 @@ const FormBuilder = () => {
 
   const handleDuplicateQuestion = (index) => {
     const newQuestions = [...questions];
-    const duplicatedQuestion = { ...questions[index], id: generateId() }; //duplicated question gets a unique ID
+    const duplicatedQuestion = { 
+        ...questions[index], 
+        id: generateId(), 
+        options: [...questions[index].options] };
     newQuestions.splice(index + 1, 0, duplicatedQuestion);
     setQuestions(newQuestions);
   };
@@ -78,7 +86,7 @@ const FormBuilder = () => {
           {questions[qIndex].options.length > 1 ? (
             <Button
               onClick={() => optionDeleteHandler(qIndex, oIndex)}
-              className="p-2 rounded-full"
+              className="p-2 m-2 rounded-full"
             >
               <RxCross2 className="text-2xl" />
             </Button>
@@ -89,23 +97,61 @@ const FormBuilder = () => {
     ));
   };
 
-  return (
-    <div 
-      className=" outline-red-400 bg-tc3 min-h-screen" 
-      layout>
-      <div className='p-8 max-w-4xl mx-auto outline-red-900'>
+  const handleSubmit = () => {
+    const form = {
+      formName,
+      formDes,
+      questions,
+    };
+    if(!formName){
+      alert('Form Name is required');
+      return;
+    }
+    else if(questions.length === 0){
+      alert('Add atleast one question');
+      return;
+    }
+    console.log(form);
+    alert('Form Submitted Successfully');
+  }
 
-      <h1 className="text-3xl text-white font-bold mb-6">Create Form</h1>
+  return (
+  <motion.div 
+    className={` ${backgroundStyle} min-h-screen flex flex-wrap justify-start md:justify-between p-4 space-y-0`}
+    layout
+    initial={{ opacity: 0, y: -50 }}
+    animate={{ opacity: 1, y: 0 }}   
+    transition={{ duration: 0.5 }}>
+
+    {/* Profile Box */}
+    <div className='profile-box bg-white rounded w-full sm:max-w-sm flex-col justify-center items-center h-fit ml-auto ml-0 sm:mr-24 order-1 sm:order-2 p-6 space-y-2'>
+      <h2 className='text-2xl font-bold'>Welcome, Onkar</h2>
+      <Button variant="primary" className='bg-tc3 hover:bg-tc7'>Visit Profile</Button>
+    </div>
+
+    {/* Form Builder */}
+    <div className='p-4 w-full sm:max-w-2xl sm:ml-12 order-2 sm:order-1'>
+      <h1 className={`text-3xl font-bold mb-6 ${darkMode ? 'text-tc7' : 'text-tc1'}`}>Create Form</h1>
       <input
+        required
         type="text"
         value={formName}
         onChange={(e) => setFormName(e.target.value)}
         placeholder="Form Name"
         className="w-full mb-6 px-4 py-2 border bg-tc4 border-gray-300 rounded-md text-lg focus:outline-none focus:ring focus:ring-blue-300 font-bold"
         />
+      <textarea
+        type="text"
+        value={formDes}
+        onChange={(e) => setFormDes(e.target.value)}
+        placeholder="Description (optional)"
+        className="w-full mb-6 px-4 py-1 border bg-tc4 border-gray-300 rounded-md text-lg focus:outline-none focus:ring focus:ring-blue-300 "
+        />
 
       <AnimatePresence>
-        <div className='bg-white p-10 rounded-lg'>
+        {questions.length === 0 ?(<></>):(
+
+          <div className='bg-white p-2 sm:p-6 rounded-lg'>
 
         {questions.map((question, qIndex) => (
           <motion.div
@@ -116,8 +162,9 @@ const FormBuilder = () => {
           variants={variants}
           transition={{ duration: 0.3 }}
           layout
-          className="mb-6 p-6 border border-gray-200 shadow-lg rounded-md shadow-sm"
+          className="mb-6 p-2  sm:p-6 sm:border border-gray-200 shadow-lg rounded-md shadow-sm"
           >
+            <h2 className="text-m font-bold mb-4">Q.{qIndex + 1}</h2>
             <input
               type="text"
               value={question.questionName}
@@ -136,6 +183,7 @@ const FormBuilder = () => {
               <option value="text">Text Answer</option>
               <option value="email">Email</option>
               <option value="phoneNum">Contact Number</option>
+              <option value="Document">Document Upload</option>
             </select>
 
             {question.questionType === 'multiple' ? (
@@ -160,6 +208,21 @@ const FormBuilder = () => {
                 </Button>
               </div>
             ) : null}
+
+              {question.questionType === 'Document' ? (
+                <div className="ml-1">
+                      <label htmlFor="docSize">Maximum file size: </label>
+                      <select
+                        name="size"
+                        id="docSize"
+                        className="mb-4 px-4 py-2 border bg-tc4 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                        >
+                        <option value="1">1 MB</option>
+                        <option value="10">10 MB</option>
+                        <option value="100">100 MB</option>
+                      </select>
+                    </div>
+                ) : null}
             <div className='flex justify-between'>
 
               <div className="mt-4 flex items-center">
@@ -178,7 +241,7 @@ const FormBuilder = () => {
                   <Button
                     variant="outline"
                     onClick={() => handleDuplicateQuestion(qIndex)}
-                    className="mr-2 px-4 py-2 bg-tc4 text-white rounded-md hover:fill"
+                    className="mr-2 px-4 py-2 bg-tc4 rounded-md hover:fill"
                     >
                     <IoDuplicate />
                   </Button>
@@ -199,23 +262,24 @@ const FormBuilder = () => {
           </motion.div>
         ))}
         </div>
+      )}
       </AnimatePresence>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 mt-3 w-max">
         <Button
           
           onClick={handleAddQuestion}
-          className="px-4 py-2 h-10 bg-tc2 text-white rounded-md hover:bg-tc3 border-2 border-tc1"
+          className="px-4 py-2 h-10 bg-tc3 text-white rounded-md hover:bg-gray-400 border-2 border-tc1"
           >
           <IoMdAddCircleOutline className="w-7 h-7 mr-1 "/>Add Question
         </Button>
         <Button className="px-4 py-2 h-10 bg-tc1 text-white rounded-md hover:bg-gray-600"
-        variant="secondary">
+        variant="secondary" onClick={handleSubmit}>
           Save or Upload
         </Button>
       </div>
-      </div>
     </div>
+  </motion.div>
   );
 };
 
