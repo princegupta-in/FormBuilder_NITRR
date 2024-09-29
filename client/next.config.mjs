@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    
+};
+export default {
+    images: {
+      domains: ['api.dicebear.com'],
+      dangerouslyAllowSVG: true,
+    },
+  };
 
-export default nextConfig;
