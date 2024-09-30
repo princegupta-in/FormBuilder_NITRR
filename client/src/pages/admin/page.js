@@ -7,7 +7,7 @@ import "../../app/globals.css";
 const userSchema = z.object({
   firstName: z.string().min(1, { message: 'First name is required' }),
   lastName: z.string().optional(),
-  company: z.string().optional(),
+  Domain: z.string().optional(),
   email: z.string().email({ message: 'Invalid email address' }),
   password: z.string().min(8, { message: 'Password must be at least 8 characters' })
     .regex(/[a-z]/, 'Password must include a lowercase letter')
@@ -22,9 +22,9 @@ const userSchema = z.object({
   zip: z.string().regex(/^\d{5}(?:[-\s]\d{4})?$/, 'Invalid ZIP code'),
   roles: z.object({
     superAdmin: z.boolean().optional(),
-    cityManager: z.boolean().optional(),
-    catalogManager: z.boolean().optional(),
-    warehouseStaff: z.boolean().optional(),
+    Admin: z.boolean().optional(),
+    Post3: z.boolean().optional(),
+    Post4: z.boolean().optional(),
   }),
 }).refine((data) => data.password === data.confirmPassword, {
   path: ['confirmPassword'],
@@ -71,10 +71,10 @@ const AdminProfilePage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Company</label>
+              <label className="block text-sm font-medium">Domain</label>
               <input
                 type="text"
-                {...register('company')}
+                {...register('Domain')}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
             </div>
@@ -171,13 +171,13 @@ const AdminProfilePage = () => {
               <input type="checkbox" {...register('roles.superAdmin')} /> Super Admin
             </label>
             <label>
-              <input type="checkbox" {...register('roles.cityManager')} /> City Manager
+              <input type="checkbox" {...register('roles.Admin')} /> Admin
             </label>
             <label>
-              <input type="checkbox" {...register('roles.catalogManager')} /> Catalog Manager
+              <input type="checkbox" {...register('roles.Post3')} /> Role 3
             </label>
             <label>
-              <input type="checkbox" {...register('roles.warehouseStaff')} /> Warehouse Staff
+              <input type="checkbox" {...register('roles.Post4')} /> Role 4
             </label>
           </div>
         </fieldset>
