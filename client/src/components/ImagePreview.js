@@ -30,7 +30,7 @@ const ImagePreview = ({ onImageSelect }) => {
         <img
           src={selectedImage}
           alt="Selected"
-          className="w-64 h-36 object-cover rounded m-4"
+          className="w-64 h-36 object-cover rounded m-4 border-2 border-gray-500"
         />
       )}
     </div>

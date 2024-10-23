@@ -148,7 +148,7 @@ const FormBuilder = () => {
     formData.append('questions', JSON.stringify(questions));
     formData.append('banner', selectedFile); 
     try {
-      const response = await fetch('/formController', {
+      const response = await fetch('https://localhost:4000/api/forms', {
         method: 'POST',
         body: formData,
       });
@@ -170,14 +170,14 @@ const FormBuilder = () => {
 
   return (
   <motion.div 
-    className={` ${backgroundStyle} min-h-screen flex flex-wrap justify-start md:justify-between p-4 space-y-0`}
+    className={` ${backgroundStyle} min-h-screen flex flex-col p-4 space-y-0 justify-center items-center`}
     layout
     initial={firstReload ? { opacity: 0, y: -50 } : { opacity: 1, y: 0 }}
     animate={{ opacity: 1, y: 0 }}  
     transition={{ duration: 0.5 }}>
 
     {/* Profile Box */}
-    <div className="mx-auto bg-gray-100 rounded-lg shadow-sm profile-box bg-white rounded w-full sm:max-w-sm flex-col justify-center items-center h-fit ml-auto ml-0 sm:mr-24 order-1 sm:order-2 ">
+    <div className="mx-auto bg-gray-100 rounded-lg shadow-sm profile-box bg-white rounded w-full sm:max-w-2xl items-center h-fit ml-auto">
       <div className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <div className="flex-shrink-0">
@@ -196,7 +196,7 @@ const FormBuilder = () => {
             
           </div>
           <div className="flex-shrink-0 mt-4 sm:mt-0">
-            <Button className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white">
+            <Button className="w-full sm:w-auto bg-sky-500 hover:bg-sky-600 text-white">
               View Dashboard
             </Button>
           </div>
@@ -206,7 +206,7 @@ const FormBuilder = () => {
     </div>
 
     {/* Form Builder */}
-    <div className='p-4 w-full sm:max-w-2xl sm:ml-12 order-2 sm:order-1'>
+    <div className='p-4 w-full sm:max-w-2xl'>
       <h1 className={`text-3xl font-bold mb-6 ${darkMode ? 'text-tc7' : 'text-tc1'}`}>Create Form</h1>
       <input
         required
