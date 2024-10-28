@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "../../components/ui/card"
 
 export default function ProfileBox({ userName = "User" }) {
   // Generate a random seed for the avatar
