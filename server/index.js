@@ -4,8 +4,9 @@ const userrouter = require("./src/routes/userRroute");
 const formrouter = require("./src/routes/formRoutes");
 const responserouter = require("./src/routes/responseRoutes");
 const app = express();
+const cors = require('cors');
 
-
+app.use(cors());
 dbconnect();
 app.use(express.json());
 app.use("/api/v1", userrouter);
