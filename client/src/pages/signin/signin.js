@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
+import axios from "axios";
 
 export default function SignIn() {
     const [darkMode, setDarkMode] = useState(false);
@@ -30,11 +31,20 @@ export default function SignIn() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
             console.log("Form Data:", formData);
         }
+        try {
+            const response = await axios.post(
+              "https://localhost:4000/api/v1/user/signin",
+              formData
+            );
+            console.log("Response:", response.data);
+          } catch (error) {
+            console.log("Error:", error);
+          }
     };
 
     const backgroundStyle = darkMode
