@@ -177,7 +177,7 @@ const FormBuilder = () => {
     transition={{ duration: 0.5 }}>
 
     {/* Profile Box */}
-    <div className="mx-auto bg-gray-100 rounded-lg shadow-sm profile-box bg-white rounded w-full sm:max-w-sm flex-col justify-center items-center h-fit ml-auto ml-0 sm:mr-24 order-1 sm:order-2 ">
+    <div className="mx-auto rounded-lg shadow-sm profile-box bg-white w-full sm:max-w-sm flex-col justify-center items-center h-fit ml-auto sm:mr-24 order-1 sm:order-2 ">
       <div className="p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <div className="flex-shrink-0">
@@ -242,7 +242,7 @@ const FormBuilder = () => {
           variants={variants}
           transition={{ duration: 0.3 }}
           layout
-          className="mb-6 p-2  sm:p-6 sm:border border-gray-200 shadow-lg rounded-md shadow-sm"
+          className="mb-6 p-2  sm:p-6 sm:border border-gray-200 shadow-lg rounded-md"
           >
             <h2 className="text-m font-bold mb-4">Q.{qIndex + 1}</h2>
             <input
