@@ -1,34 +1,45 @@
-import { NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
+const jwt  = require("jsonwebtoken");
+require("dotenv").config();
 
-const secret = process.env.JWT_SECRET;
+exports.auth = async(req,res,next)=>{
+    try {
+        
+        //extract token
+        console.log("token lene aaye hain",req.cookies.token);
 
-export default async function middleware(req, res) {
-    const cookies = req.cookies;
-    const jwt = cookies.jwt;
-    const url = req.url;
+        const token  = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ","");
 
-    if(url.includes('/signin')){
-        if(jwt){
-            try {
-                verify(jwt, secret);
-                return NextResponse.redirect('/profile');
-            } catch (error) {
-                return NextResponse.next();
-            }
+        if(!token)
+        {
+            return res.status(400).json({
+                succsess:false,
+                message:"token not found",
+            });
         }
-    }
 
-    if (url.includes('/profile') || url.includes('/formpage') || url.includes('/formbuilder')) {
-        if(!jwt){
-            return NextResponse.redirect('/signin');
-        }
+        //verify the token
         try {
-            verify(jwt, secret);
-            return NextResponse.next();
+
+            const decode = jwt.verify(token,process.env.JWTSECRET);
+            console.log("verified",decode);
+
+            req.user = decode;
+            
         } catch (error) {
-            return NextResponse.redirect('/signin');
+            console.log(error);
+            return res.status(401).json({
+                succsess:false,
+                message:"jwt verification failed",
+            });
         }
+
+        next();
+
+    } catch (error) {
+        return res.status(500).json({
+            sucsess:false,
+            message:"authentication failed",
+        });
+
     }
-    return NextResponse.next();
 }

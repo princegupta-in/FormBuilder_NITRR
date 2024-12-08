@@ -1,4 +1,6 @@
 const Form = require('../models/Form');
+const { Uploadmedia } = require('../utils/Mediauploader');
+require("dotenv").config();
 
 // Create a new form
 exports.createForm = async (req, res) => {
@@ -8,16 +10,28 @@ exports.createForm = async (req, res) => {
         const adminId = req.body.createdBy || req.user.id;
 
         const { title, description, questions } = req.body;
+        const bannerimage_file = req?.files?.BannerImage;
 
         // Ensure that the adminId is provided
         if (!adminId) {
             return res.status(400).json({ error: "Admin ID is required" });
         }
-
+        
+        let Banner_url = null;
+        if(bannerimage_file)
+        {
+            const filedata =await  Uploadmedia(bannerimage_file,process.env.FOLDER_NAME);
+            console.log("media uploaded",filedata);
+            if(filedata)
+            {
+                Banner_url = filedata.secure_url;
+            }
+        }
         // Create a new form object with the adminId (createdBy)
         const newForm = new Form({
             title,
             description,
+            Banner_url,
             questions,
             createdBy: adminId // adminId here
         });
