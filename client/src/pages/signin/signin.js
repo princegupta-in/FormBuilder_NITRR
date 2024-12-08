@@ -4,15 +4,18 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import axios from "axios";
 
 export default function SignIn() {
     const [darkMode, setDarkMode] = useState(false);
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
+        Email: '',
+        Password: '',
     });
     const [errors, setErrors] = useState({});
+    const router = useRouter();
+
 
     useEffect(() => {
         const body = document.querySelector('body');
@@ -25,20 +28,24 @@ export default function SignIn() {
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.email.includes('@')) newErrors.email = "Invalid email format";
-        if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
+        if (!formData.Email.includes('@')) newErrors.Email = "Invalid Email format";
+        if (formData.Password.length < 6) newErrors.Password = "Password must be at least 6 characters";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
             console.log("Form Data:", formData);  
         }
+        
         try {
             const response = await axios.post("http://localhost:4000/api/v1/user/signin", formData);
             console.log("Response:", response.data);
+            if (response.data.success) {
+                router.push("/admin/page");
+            }
         } catch (error) {
             console.log("Error:", error);
         }
@@ -125,13 +132,13 @@ export default function SignIn() {
                         <label htmlFor="email" className={`block font-bold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>E-mail Address</label>
                         <input
                             type="email"
-                            id="email"
-                            placeholder="Enter your email"
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            id="Email"
+                            placeholder="Enter your Email"
+                            value={formData.Email}
+                            onChange={(e) => setFormData({ ...formData, Email: e.target.value })}
                             className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${darkMode ? 'bg-gray-700 text-white border-gray-600 focus:ring-blue-500' : 'bg-white text-gray-800 border-blue-300 focus:ring-blue-500'}`}
                         />
-                        {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+                        {errors.Email && <span className="text-red-500 text-sm">{errors.Email}</span>}
                     </motion.div>
 
                     <motion.div 
@@ -143,13 +150,13 @@ export default function SignIn() {
                         <label htmlFor="password" className={`block font-bold mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Password</label>
                         <input
                             type="password"
-                            id="password"
-                            placeholder="Enter your password"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            id="Password"
+                            placeholder="Enter your Password"
+                            value={formData.Password}
+                            onChange={(e) => setFormData({ ...formData, Password: e.target.value })}
                             className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${darkMode ? 'bg-gray-700 text-white border-gray-600 focus:ring-blue-500' : 'bg-white text-gray-800 border-blue-300 focus:ring-blue-500'}`}
                         />
-                        {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+                        {errors.Password && <span className="text-red-500 text-sm">{errors.Password}</span>}
                     </motion.div>
 
                     <div className="text-center mt-6 md:mt-8">

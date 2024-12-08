@@ -8,14 +8,14 @@ import axios from "axios";
 export default function SignUp() {
   const [darkMode, setDarkMode] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    contact: "",
-    clubName: "",
-    position: "",
-    securityKey: "",
+    FirstName: "",
+    LastName: "",
+    Email: "",
+    Password: "",
+    ContactNumber: "",
+    Club: "",
+    Position: "",
+    Security_Key: "",
   });
   const [errors, setErrors] = useState({});
   useEffect(() => {
@@ -28,29 +28,29 @@ export default function SignUp() {
   }, [darkMode]);
 
   const formFields = [
-    { label: "First Name", type: "text", field: "firstName" },
-    { label: "Last Name", type: "text", field: "lastName" },
-    { label: "E-mail Address", type: "email", field: "email" },
-    { label: "Password", type: "password", field: "password" },
-    { label: "Contact Number", type: "tel", field: "contact" },
-    { label: "Club / Committee Name", type: "text", field: "clubName" },
-    { label: "Your Position", type: "text", field: "position" },
-    { label: "Security Key", type: "text", field: "securityKey" },
+    { label: "First Name", type: "text", field: "FirstName" },
+    { label: "Last Name", type: "text", field: "LastName" },
+    { label: "E-mail Address", type: "email", field: "Email" },
+    { label: "Password", type: "password", field: "Password" },
+    { label: "Contact Number", type: "tel", field: "ContactNumber" },
+    { label: "Club / Committee Name", type: "text", field: "Club" },
+    { label: "Your Position", type: "text", field: "Position" },
+    { label: "Security Key", type: "text", field: "Security_Key" },
   ];
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.firstName) newErrors.firstName = "First Name is required";
-    if (!formData.lastName) newErrors.lastName = "Last Name is required";
-    if (!formData.email.includes("@")) newErrors.email = "Invalid email format";
-    if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
-    if (!formData.contact) newErrors.contact = "Contact Number is required";
-    if (!formData.clubName)
-      newErrors.clubName = "Club/Committee Name is required";
-    if (!formData.position) newErrors.position = "Position is required";
-    if (!formData.securityKey)
-      newErrors.securityKey = "Security Key is required";
+    if (!formData.FirstName) newErrors.FirstName = "First Name is required";
+    if (!formData.LastName) newErrors.LastName = "Last Name is required";
+    if (!formData.Email.includes("@")) newErrors.Email = "Invalid Email format";
+    if (formData.Password.length < 6)
+      newErrors.Password = "Password must be at least 6 characters";
+    if (!formData.ContactNumber) newErrors.ContactNumber = "Contact Number is required";
+    if (!formData.Club)
+      newErrors.Club = "Club/Committee Name is required";
+    if (!formData.Position) newErrors.Position = "Position is required";
+    if (!formData.Security_Key)
+      newErrors.Security_Key = "Security Key is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -59,6 +59,15 @@ export default function SignUp() {
     e.preventDefault();
     if (validate()) {
       console.log("Form Data:", formData);
+    }
+    try {
+      const response = await axios.post(
+        "https://localhost:4000/api/v1/user/signup",
+        formData
+      );
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.log("Error:", error);
     }
     try {
         const response = await axios.post("http://localhost:4000/api/v1/user/signup", formData);
