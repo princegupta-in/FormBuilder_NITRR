@@ -54,10 +54,19 @@ export default function SignUp() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       console.log("Form Data:", formData);
+    }
+    try {
+      const response = await axios.post(
+        "https://localhost:4000/api/v1/user/signup",
+        formData
+      );
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.log("Error:", error);
     }
   };
   const backgroundStyle = darkMode
