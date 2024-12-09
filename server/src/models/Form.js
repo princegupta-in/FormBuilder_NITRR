@@ -19,6 +19,7 @@ const ResponseSchema = new mongoose.Schema({
 const FormSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String },
+    Banner_url:{type:String},
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true }, // Reference to the admin user who created the form
     questions: [QuestionSchema],
     responses: [ResponseSchema],
