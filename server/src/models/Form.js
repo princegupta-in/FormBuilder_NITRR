@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Schema for individual questions in the form
 const QuestionSchema = new mongoose.Schema({
     questionText: { type: String, required: true }, // The text of the question
-    questionType: { type: String, enum: ['text', 'textarea', 'radio', 'checkbox', 'dropdown'], required: true }, // Type of the question
+    questionType: { type: String, enum: ['single', 'multiple', 'text', 'email', 'contact', 'phoneNum', 'document'], required: true }, // Type of the question
     options: [{ type: String }], // Options for radio, checkbox, or dropdown (if applicable)
     isRequired: { type: Boolean, default: false }, // Whether the question is mandatory
     order: { type: Number, required: true } // Order of the question in the form

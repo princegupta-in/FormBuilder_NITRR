@@ -5,6 +5,10 @@
       "dom.iterable",
       "esnext"
     ],
+    "baseUrl": ".",
+    "paths": { 
+      "@/*": ["./src/*"]
+  },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -22,17 +26,14 @@
       }
     ],
     "strictNullChecks": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/pages/admin/[adminId]/page.js"  ],
+  ],
   "exclude": [
     "node_modules"
   ]

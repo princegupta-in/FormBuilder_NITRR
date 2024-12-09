@@ -9,8 +9,9 @@ const cors = require("cors");
 const fileupload = require("express-fileupload");
 require("dotenv").config();
 const app = express();
+const cors = require('cors');
 
-
+app.use(cors());
 dbconnect();
 
 app.use(express.json());
