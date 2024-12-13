@@ -1,7 +1,7 @@
 const express = require('express');
 const dbconnect = require("./src/db/Connectdb");
 const connectcloudinary = require("./src/utils/cloudinary");
-const userrouter = require("./src/routes/userRroute");
+const userrouter = require("./src/routes/userRoute");
 const formrouter = require("./src/routes/formRoutes");
 const responserouter = require("./src/routes/responseRoutes");
 const cookieparser = require("cookie-parser");
@@ -9,18 +9,16 @@ const cors = require("cors");
 const fileupload = require("express-fileupload");
 require("dotenv").config();
 const app = express();
-const cors = require('cors');
 
-app.use(cors());
+app.use(cors({
+    origin:"*",
+    credentials:true,
+}));
 dbconnect();
 
 app.use(express.json());
 connectcloudinary();
 app.use(cookieparser());
-app.use(cors({
-    origin:"*",
-    credentials:true,
-}));
 
 app.use(fileupload({
     useTempFiles:true,
