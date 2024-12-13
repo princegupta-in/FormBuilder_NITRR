@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 import axios from "axios";
 export default function SignUp() {
   const [darkMode, setDarkMode] = useState(false);
@@ -18,6 +19,7 @@ export default function SignUp() {
     Security_Key: "",
   });
   const [errors, setErrors] = useState({});
+  const router = useRouter();
   useEffect(() => {
     const body = document.querySelector("body");
     if (darkMode) {
@@ -61,19 +63,19 @@ export default function SignUp() {
       console.log("Form Data:", formData);
     }
     try {
-      const response = await axios.post(
-        "https://localhost:4000/api/v1/user/signup",
-        formData
-      );
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.log("Error:", error);
-    }
-    try {
         const response = await axios.post("http://localhost:4000/api/v1/user/signup", formData);
         console.log("Response:", response.data);
+        if (response.status === 201) {
+          alert("User Registered Successfully!");
+          router.push("/signin/signin");
+        }
     } catch (error) {
         console.log("Error:", error);
+        if (error.status === 401 || error.status === 400) {
+          alert(error.message)
+        } else{
+          alert("Unable to Signup, Please try again")
+        }
     }}
 
 
