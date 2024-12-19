@@ -53,8 +53,8 @@ exports.SigninUser = asyncHandler(async (req, res) => {
     if (!user) {
         throw new ApiError(401, "Invalid email or password");
     }
-
-    if(bcrypt.compare(Password,user.Password))
+    const isPasswordMatch = await bcrypt.compare(Password,user.Password)
+    if(isPasswordMatch)
         {
             //create a token and send a succsess response
             const payload = {
@@ -75,8 +75,8 @@ exports.SigninUser = asyncHandler(async (req, res) => {
             }
 
             res.cookie("token",token,options).status(200).json({
-                succsess:true,
-                message:"User logged in sucseesfully",
+                success:true,
+                message:"User logged in successfully",
                 user:{user,
                     token}
             })
@@ -84,7 +84,7 @@ exports.SigninUser = asyncHandler(async (req, res) => {
         else
         {
             return res.status(402).json({
-                succsess:false,
+                success:false,
                 message:"incorrect password"
             })
         }

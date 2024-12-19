@@ -84,8 +84,10 @@ export default function SignUp() {
     : "bg-gradient-to-br from-blue-100 via-blue-300 to-blue-100";
   return (
     <div className={`flex flex-col md:flex-row min-h-screen ${backgroundStyle}`}>
+
       {/* Top section (Left on desktop) */}
       <div className="md:w-1/2 md:fixed md:left-0 md:top-0 md:h-full flex flex-col justify-center items-center text-center p-6 md:p-12 overflow-hidden">
+      <img src="/assets/icell_dark.png" alt="logo" className="w-80 h-auto top-0 left-0 absolute mb-8" />
         {/* Dark mode button for mobile view */}
         <button
           onClick={() => setDarkMode(!darkMode)}

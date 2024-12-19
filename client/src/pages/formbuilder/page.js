@@ -6,6 +6,7 @@ import { IoDuplicate } from "react-icons/io5";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { Button } from "@/components/ui/button"
 import Link from 'next/link';
 import { ImagePreview } from '@/components/ImagePreview';
@@ -19,6 +20,8 @@ const FormBuilder = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [seed, setSeed] = useState('');
   const [firstReload, setFirstReload] = useState(true);
+  const router = useRouter();
+  
 
   const handleImageSelect = (file) => {
     setSelectedFile(file); 
@@ -142,41 +145,37 @@ const FormBuilder = () => {
       order: index + 1,
     }));
     
-    if (!questions.questionName ) {
-      alert('Question name is required');
-      return;
-    }
-    const form = {
-      title: formName,
-      description: formDes,
-      createdBy: "66f703c8d9442cd4765ab68e",
-      questions: formattedQuestions,
-      responses: [],
-      isPublished: false,
-    };
+    const formData = new FormData();
+
+  formData.append("title", formName); 
+  formData.append("description", formDes); 
   
-    console.log(form);
-  
-    try {
-      const response = await fetch('http://localhost:4000/api/v1/form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      });
-  
+  if (selectedFile) {
+    formData.append("BannerImage", selectedFile);
+  }
+  console.log(formData)
+
+  try {
+    const response = await fetch("http://localhost:4000/api/v1/form", {
+      method: "POST",
+      body: formData,
+      credentials: "include", 
+      mode: "cors"
+    });
+
       if (response.ok) {
         const data = await response.json();
         console.log('Submitted data:', data);
         alert('Form Submitted Successfully');
+        //router.push('/admin/')
       } else {
         console.error('Error:', response.statusText);
         alert('Failed to submit the form. Please try again.');
       }
     } catch (error) {
-      console.error('Fetch error:', error);
-      alert('An error occurred while submitting the form. Please try again.');
+      console.error("Error:", error);
+      alert("Authentication failed. Please sign in again.");
+      router.push('/signin/signin');
     }
   };
   
@@ -188,6 +187,8 @@ const FormBuilder = () => {
     initial={firstReload ? { opacity: 0, y: -50 } : { opacity: 1, y: 0 }}
     animate={{ opacity: 1, y: 0 }}  
     transition={{ duration: 0.5 }}>
+
+    <img src="/assets/icell_dark.png" alt="logo" className="w-80 h-auto top-0 left-0 absolute" />
 
     {/* Profile Box */}
     <div className="bg-gray-100 rounded-lg shadow-sm profile-box bg-white w-full sm:max-w-2xl flex-col justify-center items-center h-fit">
