@@ -1,9 +1,10 @@
 import Link from "next/link";
-
 export default function Navbar() {
   return (
     <nav className="navbar">
-      <div className="logo">ICELL NITRR</div>
+      <div className="logo">
+      <img src="/assets/icell_dark.png" alt="logo" className="h-20 w-auto top-0 left-0 absolute" />
+      </div>
       <ul className="nav-links">
         <li className="nav-btn-container">
           <Link href="#home" className="btn">Home</Link>

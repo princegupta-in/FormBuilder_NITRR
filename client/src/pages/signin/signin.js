@@ -33,7 +33,7 @@ export default function SignIn() {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
@@ -41,15 +41,15 @@ export default function SignIn() {
         }
         
         try {
-            const response = await axios.post("http://localhost:4000/api/v1/user/signin", formData);
+            const response = await axios.post("http://localhost:4000/api/v1/user/signin", formData, { withCredentials: true } 
+            );
             console.log("Response:", response.data);
             if (response.data.success) {
-                router.push("/admin/page");
+                router.push(`/admin/${response.data.user.user._id}/page`);
             }
         } catch (error) {
             console.log("Error:", error);
         }
-
     };
 
     const backgroundStyle = darkMode
@@ -58,8 +58,10 @@ export default function SignIn() {
 
     return (
         <div className={`flex flex-col md:flex-row min-h-screen transition-all duration-500 ${backgroundStyle}`}>
+
             {/* Top section (Left on desktop) */}
             <div className="flex-1 p-6 md:p-12 flex flex-col justify-center items-center text-center relative overflow-hidden rounded-b-[50px] md:rounded-none">
+            <img src="/assets/icell_dark.png" alt="logo" className="w-80 h-auto top-0 left-0 fixed mb-8" />
                 {/* Dark mode button for mobile view */}
                 <button 
                     onClick={() => setDarkMode(!darkMode)} 
