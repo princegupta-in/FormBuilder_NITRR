@@ -9,7 +9,8 @@ exports.createForm = async (req, res) => {
         // Alternatively, if you have authentication middleware, you can use `req.user.id`
         const adminId = req.body.createdBy || req.user.id;
 
-        const { title, description, questions } = req.body;
+        const { title, description} = req.body;
+        const questions = JSON.parse(req.body.questions);
         const bannerimage_file = req?.files?.BannerImage;
 
         // Ensure that the adminId is provided

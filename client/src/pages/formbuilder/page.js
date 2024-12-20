@@ -10,10 +10,12 @@ import { useRouter } from 'next/router';
 import { Button } from "@/components/ui/button"
 import Link from 'next/link';
 import { ImagePreview } from '@/components/ImagePreview';
+import { use } from 'react';
+import { get } from 'http';
 
 const FormBuilder = () => {
   const [formName, setFormName] = useState('');
-  const [userName, setUserName] = useState('User-Name');
+  const [user, setUser] = useState('');
   const [formDes, setFormDes] = useState('');
   const [questions, setQuestions] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
@@ -41,6 +43,37 @@ const FormBuilder = () => {
     }
   }, []);
 
+  const getCurrentUser = async () => {
+    try {
+        const response = await fetch("http://localhost:4000/api/v1/currentuser", {
+            credentials: "include",
+            mode: "cors"
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            return data.user;
+        } else {
+            throw new Error("Failed to get user info");
+        }
+    } catch (error) {
+        console.error("Error fetching user info:", error);
+        return null;
+    }
+};
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userInfo = await getCurrentUser();
+      if (userInfo) {
+        console.log('User info:', userInfo);
+        setUser(userInfo);
+      } else {
+        router.push('/signin/signin');
+      }
+    }
+    fetchUser();
+  }, []);
   const avatarUrl = `https://api.dicebear.com/6.x/bottts/svg?seed=${seed}`;
 
   const variants = {
@@ -146,10 +179,10 @@ const FormBuilder = () => {
     }));
     
     const formData = new FormData();
-
+    console.log(formattedQuestions)
   formData.append("title", formName); 
   formData.append("description", formDes); 
-  
+  formData.append("questions", JSON.stringify(formattedQuestions))
   if (selectedFile) {
     formData.append("BannerImage", selectedFile);
   }
@@ -167,7 +200,7 @@ const FormBuilder = () => {
         const data = await response.json();
         console.log('Submitted data:', data);
         alert('Form Submitted Successfully');
-        //router.push('/admin/')
+        router.push(`/admin/${user.id}/page`);
       } else {
         console.error('Error:', response.statusText);
         alert('Failed to submit the form. Please try again.');
@@ -205,10 +238,10 @@ const FormBuilder = () => {
           </div>
           <div className='flex flex-col m-4'>
             <div className="flex-grow text-center sm:text-left">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">{userName}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Hello, {user.FirstName}</h2>
             </div>
             <div className="flex-shrink-0 mt-4 sm:mt-0">
-              <Link href="/admin/page">
+              <Link href="/admin/[id]/page" as={`/admin/${user.id}/page`}>
                 <Button className="w-full sm:w-auto bg-sky-500 hover:bg-sky-600 text-white">
                   View Dashboard
                 </Button>
