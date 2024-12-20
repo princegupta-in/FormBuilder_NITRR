@@ -56,11 +56,11 @@ exports.SigninUser = asyncHandler(async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(Password,user.Password)
     if(isPasswordMatch)
         {
-            //create a token and send a succsess response
+            //create a token and send a success response
             const payload = {
                 Email:user.Email,
                 id:user._id,
-                
+                FirstName:user.FirstName
             }
             const token = jwt.sign(payload,process.env.JWTSECRET,{
                 expiresIn:"2h"
