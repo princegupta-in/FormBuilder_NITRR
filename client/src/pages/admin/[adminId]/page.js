@@ -66,6 +66,22 @@ const AdminProfilePage = () => {
     const handleOnCreateForm = () => {
         router.push('/formbuilder/page')
     }
+    const handleLogout = async () => {
+        try {const response = await fetch('http://localhost:4000/api/v1/logout', {
+            method: 'GET',
+            credentials: 'include',
+            mode: 'cors',
+        });
+        if (response.ok) {
+            localStorage.clear();
+            router.push('/signin/signin')
+        } else{
+            alert('Error during logout, please try again later')
+        }
+    } catch(error){
+            console.log('Error during logout:', error)
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
@@ -84,6 +100,11 @@ const AdminProfilePage = () => {
                 <StatsCard title="Total Responses" value={totalResponses} icon={<MdQuestionAnswer size={75} />} />
             </div>
             <FormTable forms={forms} />
+            <Button 
+                    className="bg-red-600 text-white-700 px-4 py-2 rounded-md shadow-md md:absolute bottom-6 right-6 mt-4"
+                    onClick={handleLogout}
+                >Logout
+                </Button>
         </div>
         )
 }

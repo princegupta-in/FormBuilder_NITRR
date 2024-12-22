@@ -75,7 +75,6 @@ const FormBuilder = () => {
     fetchUser();
   }, []);
   const avatarUrl = `https://api.dicebear.com/6.x/bottts/svg?seed=${seed}`;
-
   const variants = {
     hidden: { opacity: 0, y: -50 },
     visible: { opacity: 1, y: 0 },
