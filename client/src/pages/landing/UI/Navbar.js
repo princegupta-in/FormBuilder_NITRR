@@ -1,5 +1,11 @@
+'use client';
 import Link from "next/link";
+import { useAuth } from "./authContext";
+
 export default function Navbar() {
+
+  const {user, isloggedin} = useAuth();
+
   return (
     <nav className="navbar">
       <div className="logo">
@@ -15,12 +21,19 @@ export default function Navbar() {
         <li className="nav-btn-container">
           <Link href="#contact" className="btn">Contact</Link>
         </li>
-        <li className="btn-container">
+        {isloggedin && user? (<li className="btn-container">
+          <Link href={`/admin/${user.id}/page`} className="btn btn-explore">View Dashboard</Link>
+        </li>): (
+          <>
+          <li className="btn-container">
           <Link href="/signin/signin" className="btn btn-explore">Signin</Link>
         </li>
         <li className="btn-container">
           <Link href="/signup/signup" className="btn btn-explore">Signup</Link>
         </li>
+          </>
+        )}
+        
       </ul>
     </nav>
   );
