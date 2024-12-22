@@ -73,6 +73,7 @@ const AdminProfilePage = () => {
             mode: 'cors',
         });
         if (response.ok) {
+            localStorage.clear();
             router.push('/signin/signin')
         } else{
             alert('Error during logout, please try again later')

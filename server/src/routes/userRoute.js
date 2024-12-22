@@ -17,7 +17,6 @@ router.get("/logout", auth, (req, res) => {
             httpOnly: true,
             secure: true
         });
-        localStorage.clear();
 
         return res.status(200).json({
             success: true,

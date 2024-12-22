@@ -14,6 +14,7 @@ export default function SignIn() {
         Password: '',
     });
     const [errors, setErrors] = useState({});
+    const [user, setUser] = useState(null);
     const router = useRouter();
 
 
@@ -25,6 +26,30 @@ export default function SignIn() {
             body.classList.remove('dark');
         }
     }, [darkMode]);
+
+    useEffect(() => {
+        const checkLogin = async () =>{
+        try{
+          const response = await fetch('http://localhost:4000/api/v1/currentuser', {
+            credentials: "include",
+            mode: 'cors'
+          })
+          if (response.ok){
+            console.log('User is logged in');
+            const data = await response.json();
+            setUser(data.user);
+            console.log(user)
+        }
+        } catch(error){
+          console.log('Error getting current user:', error)
+        }
+      }
+      checkLogin();    
+    }, []);
+
+    if(user){
+        router.push(`/admin/${user.id}/page`);
+}
 
     const validate = () => {
         const newErrors = {};
