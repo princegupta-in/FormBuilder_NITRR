@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {auth} = require('../middlewares/Authentication');
+const { rateLimitMiddleware } = require('../middlewares/rateLimiter');
 
 const {Signupuser, SigninUser} = require("../controllers/Auth");
-router.post("/user/signup",Signupuser);
-router.post("/user/signin",SigninUser);
+router.post("/user/signup", Signupuser);
+router.post("/user/signin",rateLimitMiddleware, SigninUser);
 router.get("/currentuser", auth, (req, res) => {
     res.json({ 
         success: true,

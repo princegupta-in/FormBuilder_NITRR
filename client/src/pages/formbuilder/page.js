@@ -206,7 +206,7 @@ const FormBuilder = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Authentication failed. Please sign in again.");
+      alert(error.response.data.message);
       router.push('/signin/signin');
     }
   };
@@ -364,6 +364,7 @@ const FormBuilder = () => {
                         variant="outline"
                         onClick={() => handleDuplicateQuestion(qIndex)}
                         className="mr-2 px-4 py-2 bg-tc4 rounded-md hover:fill"
+                        alt="Duplicate Question"
                       >
                         <IoDuplicate />
                       </Button>
