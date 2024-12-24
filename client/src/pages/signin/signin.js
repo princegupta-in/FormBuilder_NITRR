@@ -74,6 +74,11 @@ export default function SignIn() {
             }
         } catch (error) {
             console.log("Error:", error);
+            if(error.response.data.message){
+                alert(error.response.data.message);
+            } else{
+                alert("An error occurred. Please try again later.");
+            }
         }
     };
 

@@ -33,6 +33,7 @@ export default function Hero() {
         <Image
           src="/assets/forms.jpg"
           alt="Illustration of a developer working"
+          draggable="false"
           width={500}
           height={300}
         />
