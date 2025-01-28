@@ -57,7 +57,10 @@ exports.SigninUser = asyncHandler(async (req, res) => {
         await failedLoginLimiter.consume(ipAddr);
     } catch (error) {
         const timeLeft = Math.round(error.msBeforeNext / 1000) || 1;
-        throw new ApiError(429, `Account locked due to too many failed attempts. Please try again in ${timeLeft} seconds`);
+        return res.status(401).json({
+            success:false,
+            message:`Account locked due to too many failed attempts. Please try again in ${timeLeft} seconds`
+        });
     }
 
     const user = await User.findOne({ Email });
