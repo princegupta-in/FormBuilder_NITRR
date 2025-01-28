@@ -65,13 +65,7 @@ const FormTable = ({ forms, onFormClick, onShare, onDelete }) => {
                                         <AiOutlineShareAlt className="h-5 w-5" />
                                     </button>
                                     
-                                    <button
-                                        className="bg-red-500 text-white p-2 rounded-md flex items-center justify-center"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); 
-                                            onDelete(form); 
-                                        }}
-                                    >
+                                    <button onClick={() => onDelete(form)} className="bg-red-500 text-white p-2 rounded-md flex items-center justify-center">
                                         <AiOutlineDelete className="h-5 w-5" />
                                     </button>
                                 </div>
