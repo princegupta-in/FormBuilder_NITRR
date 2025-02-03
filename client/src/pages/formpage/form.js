@@ -74,11 +74,10 @@ const Form = () => {
   return (
     <div className="form-wrapper">
       {/* Banner Section */}
-      <Box
-        component="img"
-        src="./forms.jpg"
+      <img
+        src='/assets/forms.jpg'
         alt="Banner Image"
-        className="banner-image"
+        className="banner-image w-24 h-24"
       />
 
       {/* Form Section */}
