@@ -7,10 +7,10 @@ const {auth} = require('../middlewares/Authentication');
 router.post('/', auth,formController.createForm);
 
 // Get all forms
-router.get('/',auth, formController.getForms);
+router.get('/', formController.getForms);
 
 // Get a form by ID
-router.get('/:id',auth, formController.getFormById);
+router.get('/:id', formController.getFormById);
 
 // Update a form
 router.put('/:id',auth, formController.updateForm);

@@ -23,8 +23,9 @@ const Form = () => {
     // Fetch form data from the API
     const fetchFormData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/v1/form");
+        const response = await fetch("http://localhost:4000/api/v1/form/6798f7f27e8071b6afd4cc2b");
         const data = await response.json();
+        console.log(data)
         setFormFields(data.questions || []);
         setFormMeta({ formName: data.formName, formDes: data.formDes });
       } catch (error) {
@@ -153,7 +154,7 @@ const Form = () => {
                   type={field.questionType}
                   name={field.id}
                   id={field.id}
-                  placeholder={`Enter your ${field.questionName.toLowerCase()}`}
+                  placeholder={`Enter your ${field.questionName}`}
                   required={field.required}
                   value={formData[field.id] || ""}
                   onChange={handleChange}
