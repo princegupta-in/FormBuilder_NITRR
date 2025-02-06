@@ -24,7 +24,7 @@ const AdminProfilePage = () => {
 
     const getCurrentUser = async () => {
         try {
-            const response = await fetch("http://localhost:4000/api/v1/currentuser", {
+            const response = await fetch("https://formbuilder-backend-2.onrender.com/api/v1/currentuser", {
                 credentials: "include",
                 mode: "cors"
             });
@@ -69,7 +69,7 @@ const AdminProfilePage = () => {
         // Fetch forms data from API
         const fetchForms = async () => {
             try {
-                const response = await fetch("http://localhost:4000/api/v1/form", {
+                const response = await fetch("https://formbuilder-backend-2.onrender.com/api/v1/form", {
                     credentials: "include",
                     mode: "cors"
                 });
@@ -124,7 +124,7 @@ const AdminProfilePage = () => {
                 throw new Error('Form ID is missing');
             }
     
-            const response = await fetch(`http://localhost:4000/api/v1/form/${formId}`, {
+            const response = await fetch(`https://formbuilder-backend-2.onrender.com/api/v1/form/${formId}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 mode: 'cors'
@@ -149,7 +149,7 @@ const AdminProfilePage = () => {
     };
 
     const handleLogout = async () => {
-        try {const response = await fetch('http://localhost:4000/api/v1/logout', {
+        try {const response = await fetch('https://formbuilder-backend-2.onrender.com/api/v1/logout', {
             method: 'GET',
             credentials: 'include',
             mode: 'cors',
@@ -173,7 +173,7 @@ const AdminProfilePage = () => {
     const fetchFormResponses = async (formId) => {
         try {
             setLoadingResponses(true);
-            const response = await fetch(`http://localhost:4000/api/v1/form-response/${formId}`, {
+            const response = await fetch(`https://formbuilder-backend-2.onrender.com/api/v1/form-response/${formId}`, {
                 credentials: 'include',
                 mode: 'cors',
             });

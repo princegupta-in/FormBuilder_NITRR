@@ -23,7 +23,7 @@ const Form = () => {
     // Fetch form data from the API
     const fetchFormData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/v1/form/6798f7f27e8071b6afd4cc2b");
+        const response = await fetch("https://formbuilder-backend-2.onrender.com/api/v1/form/6798f7f27e8071b6afd4cc2b");
         const data = await response.json();
         console.log(data)
         setFormFields(data.questions || []);
@@ -52,7 +52,7 @@ const Form = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:4000/api/v1/form-response", {
+      const response = await fetch("https://formbuilder-backend-2.onrender.com/api/v1/form-response", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

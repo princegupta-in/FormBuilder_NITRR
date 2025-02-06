@@ -63,7 +63,7 @@ export default function SignUp() {
       console.log("Form Data:", formData);
     }
     try {
-        const response = await axios.post("http://localhost:4000/api/v1/user/signup", formData);
+        const response = await axios.post("https://formbuilder-backend-2.onrender.com/api/v1/user/signup", formData);
         console.log("Response:", response.data);
         if (response.status === 201) {
           alert("User Registered Successfully!");

@@ -45,7 +45,7 @@ const FormBuilder = () => {
 
   const getCurrentUser = async () => {
     try {
-        const response = await fetch("http://localhost:4000/api/v1/currentuser", {
+        const response = await fetch("https://formbuilder-backend-2.onrender.com/api/v1/currentuser", {
             credentials: "include",
             mode: "cors"
         });
@@ -188,7 +188,7 @@ const FormBuilder = () => {
   console.log(formData)
 
   try {
-    const response = await fetch("http://localhost:4000/api/v1/form", {
+    const response = await fetch("https://formbuilder-backend-2.onrender.com/api/v1/form", {
       method: "POST",
       body: formData,
       credentials: "include", 

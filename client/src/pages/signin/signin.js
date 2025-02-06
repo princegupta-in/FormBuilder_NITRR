@@ -30,7 +30,7 @@ export default function SignIn() {
     useEffect(() => {
         const checkLogin = async () =>{
         try{
-          const response = await fetch('http://localhost:4000/api/v1/currentuser', {
+          const response = await fetch('https://formbuilder-backend-2.onrender.com/api/v1/currentuser', {
             credentials: "include",
             mode: 'cors'
           })
@@ -66,7 +66,7 @@ export default function SignIn() {
         }
         
         try {
-            const response = await axios.post("http://localhost:4000/api/v1/user/signin", formData, { withCredentials: true } 
+            const response = await axios.post("https://formbuilder-backend-2.onrender.com/api/v1/user/signin", formData, { withCredentials: true } 
             );
             console.log("Response:", response.data);
             if (response.data.success) {

@@ -12,7 +12,7 @@ export function AuthProvider({children}) {
     useEffect(() => {
         const checkLogin = async () =>{
         try{
-          const response = await fetch('http://localhost:4000/api/v1/currentuser', {
+          const response = await fetch('https://formbuilder-backend-2.onrender.com/api/v1/currentuser', {
             credentials: "include",
             mode: 'cors'
           })
